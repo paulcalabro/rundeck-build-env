@@ -1,0 +1,29 @@
+---
+driver:
+  name: ec2
+  instance_type: t2.large
+  block_device_mappings:
+    -
+      device_name: /dev/sda1
+      ebs:
+        volume_size: 20
+        delete_on_termination: true
+  region: us-west-1
+
+provisioner:
+  name: shell
+
+verifier:
+  name: dummy
+
+platforms:
+  -
+    name: ubuntu-21.04
+
+suites:
+  -
+    name: default
+    lifecycle:
+      post_converge:
+        -
+          local: ./download_war_file.sh
